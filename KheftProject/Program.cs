@@ -1,25 +1,26 @@
+using KheftProject.Core.DependencyInjection;
+using KheftProject.Core.Middlewares.Security;
+
 var builder = WebApplication.CreateBuilder(args);
-
-// Add services to the container.
-
+// DI
 builder.Services.AddControllers();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+builder.Services.AddKheftServices();
 
+
+// Middlewares
 var app = builder.Build();
-
-// Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
 }
 
-app.UseHttpsRedirection();
+//app.UseHttpsRedirection();
 
-app.UseAuthorization();
+app.UseMiddleware<SecurityMiddleware>();
 
 app.MapControllers();
 
-app.Run();
+app.Run("http://*:5000");
