@@ -1,3 +1,4 @@
+using KheftProject.Core.DataAccess;
 using KheftProject.Core.DependencyInjection;
 using KheftProject.Core.Middlewares.Security;
 
@@ -6,11 +7,15 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-builder.Services.AddKheftServices();
+builder.Services.AddKheftServices(builder.Configuration);
 
+
+
+var app = builder.Build();
+// Migrator
+await Migrator.Migrate(app);
 
 // Middlewares
-var app = builder.Build();
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
