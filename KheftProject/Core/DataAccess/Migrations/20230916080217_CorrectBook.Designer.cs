@@ -3,6 +3,7 @@ using System;
 using KheftProject.Core.DataAccess;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace KheftProject.Core.DataAccess.Migrations
 {
     [DbContext(typeof(KheftDbContext))]
-    partial class KheftDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230916080217_CorrectBook")]
+    partial class CorrectBook
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -33,8 +36,13 @@ namespace KheftProject.Core.DataAccess.Migrations
                         .HasColumnType("text");
 
                     b.Property<string>("Description")
-                        .IsRequired()
                         .HasColumnType("text");
+
+                    b.Property<bool>("IsAccepted")
+                        .HasColumnType("boolean");
+
+                    b.Property<bool>("IsPaid")
+                        .HasColumnType("boolean");
 
                     b.Property<Guid>("OwnerId")
                         .HasColumnType("uuid");
@@ -42,32 +50,14 @@ namespace KheftProject.Core.DataAccess.Migrations
                     b.Property<decimal>("Price")
                         .HasColumnType("numeric");
 
+                    b.Property<string>("Writer")
+                        .HasColumnType("text");
+
                     b.HasKey("BookId");
 
                     b.HasIndex("OwnerId");
 
-                    b.ToTable("Books");
-                });
-
-            modelBuilder.Entity("KheftProject.Book.DataAccess.Entity.BookMetaDataEntity", b =>
-                {
-                    b.Property<Guid>("BookId")
-                        .HasColumnType("uuid");
-
-                    b.Property<string>("BookStatus")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<string>("TelegramUserName")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.HasKey("BookId");
-
-                    b.ToTable("BookMetaData");
+                    b.ToTable("BookEntity");
                 });
 
             modelBuilder.Entity("KheftProject.User.DataAccess.Entities.UserEntity", b =>
@@ -77,18 +67,24 @@ namespace KheftProject.Core.DataAccess.Migrations
                         .HasColumnType("uuid");
 
                     b.Property<string>("FullName")
+                        .HasColumnType("text");
+
+                    b.Property<string>("PhoneNumber")
+                        .HasColumnType("text");
+
+                    b.Property<string>("TelegramUsername")
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<long>("TelegramSerialId")
-                        .HasColumnType("bigint");
-
                     b.HasKey("UserId");
 
-                    b.HasIndex("TelegramSerialId")
+                    b.HasIndex("PhoneNumber")
                         .IsUnique();
 
-                    b.ToTable("Users");
+                    b.HasIndex("TelegramUsername")
+                        .IsUnique();
+
+                    b.ToTable("UserEntity");
                 });
 
             modelBuilder.Entity("KheftProject.Book.DataAccess.Entity.BookEntity", b =>
@@ -100,17 +96,6 @@ namespace KheftProject.Core.DataAccess.Migrations
                         .IsRequired();
 
                     b.Navigation("Owner");
-                });
-
-            modelBuilder.Entity("KheftProject.Book.DataAccess.Entity.BookMetaDataEntity", b =>
-                {
-                    b.HasOne("KheftProject.Book.DataAccess.Entity.BookEntity", "BookEntity")
-                        .WithOne()
-                        .HasForeignKey("KheftProject.Book.DataAccess.Entity.BookMetaDataEntity", "BookId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("BookEntity");
                 });
 #pragma warning restore 612, 618
         }
