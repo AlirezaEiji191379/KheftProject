@@ -1,5 +1,7 @@
 ﻿using FluentValidation;
+using KheftProject.Book.Business.Abstractions;
 using KheftProject.Book.Business.Contracts.Commands;
+using KheftProject.Book.Business.Job;
 using KheftProject.Book.Business.Validators;
 using KheftProject.Book.DataAccess.Repositories;
 using KheftProject.Book.DataAccess.Repositories.Abstractions;
@@ -17,5 +19,6 @@ public class BookDependencyInjector : IDependencyInstaller
         services.AddScoped<IBookMetaDataRepository, BookMetaDataRepository>();
         services.AddSingleton<IValidator<BookCreationCommand>, BookCreationCommandValidator>();
         services.AddScoped<IBookFacade, BookFacade>();
+        services.AddScoped<IUnpaidBooksRemoverJob, UnpaidBooksRemoverJob>();
     }
 }

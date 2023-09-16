@@ -30,4 +30,13 @@ internal class BookMetaDataRepository : BaseRepository<BookMetaDataEntity>,IBook
     {
         return _dbContext.BookMetaData.AnyAsync(x => x.BookStatus != BookStatus.NotPaid && x.BookId == bookId);
     }
+
+    public Task<List<Guid>> GetExpiredBookIds()
+    {
+        return _dbContext
+            .BookMetaData
+            .Where(x => x.BookStatus == BookStatus.NotPaid && x.CreatedAt <= DateTime.Now.ToLocalTime().AddMinutes(30))
+            .Select(x => x.BookId)
+            .ToListAsync();
+    }
 }
