@@ -17,5 +17,6 @@ public class KheftDbContext : DbContext
 
     public DbSet<UserEntity> Users { get; set; }
     public DbSet<BookEntity> Books { get; set; }
+    public DbSet<BookMetaDataEntity> BookMetaData { get; set; }
 
 }

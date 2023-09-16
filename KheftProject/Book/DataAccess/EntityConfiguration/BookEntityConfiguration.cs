@@ -13,9 +13,6 @@ public class BookEntityConfiguration : IEntityTypeConfiguration<BookEntity>
         builder.HasOne(bookEntity => bookEntity.Owner)
             .WithMany()
             .HasForeignKey(x => x.OwnerId);
-        builder.Property(x => x.BookStatus)
-            .HasConversion(t => t.ToString(),
-                t => (BookStatus)Enum.Parse(typeof(BookStatus), t));
     }
 
 }

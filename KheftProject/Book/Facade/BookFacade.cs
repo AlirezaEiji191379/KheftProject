@@ -6,15 +6,15 @@ namespace KheftProject.Book.Facade;
 
 internal class BookFacade : IBookFacade
 {
-    private readonly IBookRepository _bookRepository;
+    private readonly IBookMetaDataRepository _bookMetaDataRepository;
 
-    public BookFacade(IBookRepository bookRepository)
+    public BookFacade(IBookMetaDataRepository bookMetaDataRepository)
     {
-        _bookRepository = bookRepository;
+        _bookMetaDataRepository = bookMetaDataRepository;
     }
 
     public void SetBookPaid(Guid bookId)
     {
-        _bookRepository.ChangeBookStatus(bookId, BookStatus.Pending);
+        _bookMetaDataRepository.ChangeBookStatus(bookId, BookStatus.Pending);
     }
 }

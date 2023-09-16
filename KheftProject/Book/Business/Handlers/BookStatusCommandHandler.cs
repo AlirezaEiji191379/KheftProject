@@ -9,12 +9,12 @@ namespace KheftProject.Book.Business.Handlers;
 
 internal class BookStatusCommandHandler : IRequestHandler<BookStatusCommand, ResponseDto>
 {
-    private readonly IBookRepository _bookRepository;
+    private readonly IBookMetaDataRepository _bookMetaDataRepository;
     private readonly IUnitOfWork _unitOfWork;
 
-    public BookStatusCommandHandler(IBookRepository bookRepository, IUnitOfWork unitOfWork)
+    public BookStatusCommandHandler(IBookMetaDataRepository bookMetaDataRepository, IUnitOfWork unitOfWork)
     {
-        _bookRepository = bookRepository;
+        _bookMetaDataRepository = bookMetaDataRepository;
         _unitOfWork = unitOfWork;
     }
 
@@ -22,7 +22,7 @@ internal class BookStatusCommandHandler : IRequestHandler<BookStatusCommand, Res
     {
         try
         {
-            var isPaid = await _bookRepository.IsBookPaid(request.BookId);
+            var isPaid = await _bookMetaDataRepository.IsBookPaid(request.BookId);
             if (!isPaid)
             {
                 return new ResponseDto()
@@ -33,7 +33,7 @@ internal class BookStatusCommandHandler : IRequestHandler<BookStatusCommand, Res
             }
 
             var bookStatus = request.IsAccepted ? BookStatus.Accepted : BookStatus.Rejected;
-            _bookRepository.ChangeBookStatus(request.BookId, bookStatus);
+            _bookMetaDataRepository.ChangeBookStatus(request.BookId, bookStatus);
             await _unitOfWork.SaveChangesAsync(cancellationToken);
             return new ResponseDto()
             {

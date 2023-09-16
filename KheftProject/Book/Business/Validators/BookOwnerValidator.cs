@@ -1,12 +1,11 @@
 ﻿using FluentValidation;
-using KheftProject.User.Business.Contracts.Commands;
-using Microsoft.AspNetCore.Identity;
+using KheftProject.Book.Business.Contracts.Commands;
 
-namespace KheftProject.User.Business.Validators;
+namespace KheftProject.Book.Business.Validators;
 
-public class UserRegistrationCommandValidator : AbstractValidator<UserRegistrationCommand>
+public class BookOwnerValidator : AbstractValidator<BookOwner>
 {
-    public UserRegistrationCommandValidator()
+    public BookOwnerValidator()
     {
         RuleFor(x => x.TelegramUsername)
             .NotEmpty()

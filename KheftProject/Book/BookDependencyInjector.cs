@@ -14,6 +14,7 @@ public class BookDependencyInjector : IDependencyInstaller
     public void Install(IServiceCollection services)
     {
         services.AddScoped<IBookRepository, BookRepository>();
+        services.AddScoped<IBookMetaDataRepository, BookMetaDataRepository>();
         services.AddSingleton<IValidator<BookCreationCommand>, BookCreationCommandValidator>();
         services.AddScoped<IBookFacade, BookFacade>();
     }
