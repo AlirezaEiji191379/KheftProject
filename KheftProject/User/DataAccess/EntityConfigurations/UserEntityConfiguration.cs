@@ -10,6 +10,6 @@ public class UserEntityConfiguration : IEntityTypeConfiguration<UserEntity>
     {
         builder.HasKey(userEntity => userEntity.UserId);
         builder.HasIndex(userEntity => userEntity.TelegramUsername).IsUnique();
-        builder.HasIndex(userEntity => userEntity.PhoneNumber).IsUnique();
+        builder.HasIndex(userEntity => userEntity.TelegramSerialId).IsUnique();
     }
 }

@@ -32,9 +32,9 @@ internal class UserRegistrationCommandHandler : IRequestHandler<UserRegistration
             var userEntity = new UserEntity()
             {
                 FullName = request.FullName,
-                PhoneNumber = request.PhoneNumber,
                 TelegramUsername = request.TelegramUsername,
-                UserId = request.UserId
+                UserId = Guid.NewGuid(),
+                TelegramSerialId = request.TelegramSerialId
             };
             await _userRepository.Create(userEntity);
             await _unitOfWork.SaveChangesAsync(cancellationToken);
@@ -48,7 +48,7 @@ internal class UserRegistrationCommandHandler : IRequestHandler<UserRegistration
         {
             return new ResponseDto()
             {
-                Message = exception.Message,
+                Message = "the use does exist or error occured during user registration",
                 StatusCode = 400
             };
         }

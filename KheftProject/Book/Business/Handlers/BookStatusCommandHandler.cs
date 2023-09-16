@@ -45,7 +45,7 @@ internal class BookStatusCommandHandler : IRequestHandler<BookStatusCommand, Res
         {
             return new ResponseDto()
             {
-                Message = exception.Message,
+                Message = "Error occured during changing book status!",
                 StatusCode = 400
             };
         }

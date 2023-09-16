@@ -50,7 +50,7 @@ internal class BookCreationCommandHandler : IRequestHandler<BookCreationCommand,
             return new ResponseDto()
             {
                 StatusCode = 400,
-                Message = exception.Message
+                Message = "Error was occured during adding the book to the system! try later!"
             };
         }
     }
