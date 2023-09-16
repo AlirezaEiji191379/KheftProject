@@ -35,7 +35,8 @@ internal class BookCreationCommandHandler : IRequestHandler<BookCreationCommand,
                 OwnerId = request.OwnerId,
                 BookName = request.BookName,
                 Price = request.Price,
-                BookStatus = BookStatus.NotPaid
+                BookStatus = BookStatus.NotPaid,
+                BookId = Guid.NewGuid()
             };
             await _bookRepository.Create(bookEntity);
             await _unitOfWork.SaveChangesAsync(cancellationToken);
