@@ -25,9 +25,9 @@ public class BookController : ControllerBase
 
     [HttpPatch]
     [Route("Accpet")]
-    public async Task<IActionResult> AcceptBook([FromBody] BookAcceptCommand bookAcceptCommand)
+    public async Task<IActionResult> AcceptBook([FromBody] BookStatusCommand bookStatusCommand)
     {
-        var response = await _mediator.Send(bookAcceptCommand);
+        var response = await _mediator.Send(bookStatusCommand);
         return StatusCode(response.StatusCode, new {Message = response.Message});
     }
     

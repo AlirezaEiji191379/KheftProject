@@ -1,4 +1,5 @@
 ﻿using KheftProject.Book.DataAccess.Entity;
+using KheftProject.Book.DataAccess.Entity.Enums;
 using KheftProject.Book.DataAccess.Repositories.Abstractions;
 using KheftProject.Core.DataAccess;
 using KheftProject.Core.DataAccess.Repository;
@@ -9,36 +10,25 @@ namespace KheftProject.Book.DataAccess.Repositories;
 public class BookRepository : BaseRepository<BookEntity>, IBookRepository
 {
     private readonly KheftDbContext _dbContext;
-    
+
     public BookRepository(KheftDbContext dbContext) : base(dbContext)
     {
         _dbContext = dbContext;
     }
-    
-    public void SetBookPaid(Guid bookId)
+
+    public void ChangeBookStatus(Guid bookId, BookStatus bookStatus)
     {
         var book = new BookEntity()
         {
             BookId = bookId
         };
         _dbContext.Attach(book);
-        book.IsPaid = true;
-        _dbContext.Entry(book).Property(x => x.IsPaid).IsModified = true;
-    }
-    
-    public void AcceptBook(Guid bookId)
-    {
-        var book = new BookEntity()
-        {
-            BookId = bookId
-        };
-        _dbContext.Attach(book);
-        book.IsAccepted = true;
-        _dbContext.Entry(book).Property(x => x.IsAccepted).IsModified = true;
+        book.BookStatus = bookStatus;
+        _dbContext.Entry(book).Property(x => x.BookStatus).IsModified = true;
     }
 
     public Task<bool> IsBookPaid(Guid bookId)
     {
-        return _dbContext.Books.AnyAsync(x => x.IsPaid == true && x.BookId == bookId);
+        return _dbContext.Books.AnyAsync(x => x.BookStatus != BookStatus.NotPaid && x.BookId == bookId);
     }
 }

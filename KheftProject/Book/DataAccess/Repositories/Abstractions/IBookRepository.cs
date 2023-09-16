@@ -1,11 +1,11 @@
 ﻿using KheftProject.Book.DataAccess.Entity;
+using KheftProject.Book.DataAccess.Entity.Enums;
 using KheftProject.Core.DataAccess.Repository.Abstraction;
 
 namespace KheftProject.Book.DataAccess.Repositories.Abstractions;
 
 internal interface IBookRepository : IBaseRepository<BookEntity>
 {
-    void AcceptBook(Guid bookId);
-    void SetBookPaid(Guid bookId);
+    void ChangeBookStatus(Guid bookId, BookStatus bookStatus);
     Task<bool> IsBookPaid(Guid bookId);
 }

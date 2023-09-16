@@ -1,4 +1,5 @@
 ﻿using KheftProject.Book.DataAccess.Entity;
+using KheftProject.Book.DataAccess.Entity.Enums;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
@@ -12,6 +13,9 @@ public class BookEntityConfiguration : IEntityTypeConfiguration<BookEntity>
         builder.HasOne(bookEntity => bookEntity.Owner)
             .WithMany()
             .HasForeignKey(x => x.OwnerId);
+        builder.Property(x => x.BookStatus)
+            .HasConversion(t => t.ToString(),
+                t => (BookStatus)Enum.Parse(typeof(BookStatus), t));
     }
-    
+
 }

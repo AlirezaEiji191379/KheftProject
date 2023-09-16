@@ -1,6 +1,7 @@
 ﻿using FluentValidation;
 using KheftProject.Book.Business.Contracts.Commands;
 using KheftProject.Book.DataAccess.Entity;
+using KheftProject.Book.DataAccess.Entity.Enums;
 using KheftProject.Book.DataAccess.Repositories.Abstractions;
 using KheftProject.Core.Contexts;
 using KheftProject.Core.DataAccess.Repository.Abstraction;
@@ -33,7 +34,8 @@ internal class BookCreationCommandHandler : IRequestHandler<BookCreationCommand,
                 Description = request.Description,
                 OwnerId = request.OwnerId,
                 BookName = request.BookName,
-                Price = request.Price
+                Price = request.Price,
+                BookStatus = BookStatus.NotPaid
             };
             await _bookRepository.Create(bookEntity);
             await _unitOfWork.SaveChangesAsync(cancellationToken);
