@@ -3,6 +3,7 @@ using System;
 using KheftProject.Core.DataAccess;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace KheftProject.Core.DataAccess.Migrations
 {
     [DbContext(typeof(KheftDbContext))]
-    partial class KheftDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230916080217_CorrectBook")]
+    partial class CorrectBook
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -47,11 +50,14 @@ namespace KheftProject.Core.DataAccess.Migrations
                     b.Property<decimal>("Price")
                         .HasColumnType("numeric");
 
+                    b.Property<string>("Writer")
+                        .HasColumnType("text");
+
                     b.HasKey("BookId");
 
                     b.HasIndex("OwnerId");
 
-                    b.ToTable("Books");
+                    b.ToTable("BookEntity");
                 });
 
             modelBuilder.Entity("KheftProject.User.DataAccess.Entities.UserEntity", b =>
@@ -78,7 +84,7 @@ namespace KheftProject.Core.DataAccess.Migrations
                     b.HasIndex("TelegramUsername")
                         .IsUnique();
 
-                    b.ToTable("Users");
+                    b.ToTable("UserEntity");
                 });
 
             modelBuilder.Entity("KheftProject.Book.DataAccess.Entity.BookEntity", b =>
