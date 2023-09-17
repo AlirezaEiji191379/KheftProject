@@ -10,6 +10,7 @@ public class TransactionEntityConfiguration : IEntityTypeConfiguration<Transacti
     public void Configure(EntityTypeBuilder<TransactionEntity> builder)
     {
         builder.HasKey(x => x.TransactionId);
+        builder.HasAlternateKey(x => x.BankTransactionRefId);
         builder.HasOne(x => x.Book)
             .WithOne()
             .HasForeignKey<TransactionEntity>(x => x.BookId);

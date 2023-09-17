@@ -6,6 +6,7 @@ namespace KheftProject.Payment.DataAccess.Entities;
 public class TransactionEntity
 {
     public Guid TransactionId { get; set; }
+    public long BankTransactionRefId { get; set; }
     public decimal Amount { get; set; }
     public TransactionStatus Status { get; set; }
     public DateTime CreatedAt { get; set; } 

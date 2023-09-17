@@ -79,6 +79,9 @@ namespace KheftProject.Core.DataAccess.Migrations
                     b.Property<decimal>("Amount")
                         .HasColumnType("numeric");
 
+                    b.Property<long>("BankTransactionRefId")
+                        .HasColumnType("bigint");
+
                     b.Property<Guid>("BookId")
                         .HasColumnType("uuid");
 
@@ -91,10 +94,12 @@ namespace KheftProject.Core.DataAccess.Migrations
 
                     b.HasKey("TransactionId");
 
+                    b.HasAlternateKey("BankTransactionRefId");
+
                     b.HasIndex("BookId")
                         .IsUnique();
 
-                    b.ToTable("TransactionEntity");
+                    b.ToTable("Transactions");
                 });
 
             modelBuilder.Entity("KheftProject.User.DataAccess.Entities.UserEntity", b =>
