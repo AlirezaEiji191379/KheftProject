@@ -19,7 +19,7 @@ public static class KheftDependencyInjector
         (options =>
             options.UseNpgsql(configuration.GetConnectionString("KheftDB")));
         serviceCollection.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly()));
-        serviceCollection.AddHostedService<BookJobRunner>();
+        //serviceCollection.AddHostedService<BookJobRunner>();
     }
 
 

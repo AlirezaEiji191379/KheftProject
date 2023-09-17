@@ -28,4 +28,4 @@ app.UseMiddleware<SecurityMiddleware>();
 
 app.MapControllers();
 
-app.Run("http://*:5000");
+app.Run();
