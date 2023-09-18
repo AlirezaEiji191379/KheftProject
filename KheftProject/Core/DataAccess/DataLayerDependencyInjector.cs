@@ -6,8 +6,8 @@ namespace KheftProject.Core.DataAccess;
 
 public class DataLayerDependencyInjector : IDependencyInstaller
 {
-    public void Install(IServiceCollection serviceCollection)
+    public void Install(IServiceCollection services)
     {
-        serviceCollection.AddScoped<IUnitOfWork, UnitOfWork>();
+        services.AddScoped<IUnitOfWork, UnitOfWork>();
     }
 }

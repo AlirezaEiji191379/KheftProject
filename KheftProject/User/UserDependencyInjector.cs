@@ -10,10 +10,10 @@ namespace KheftProject.User;
 
 public class UserDependencyInjector : IDependencyInstaller
 {
-    public void Install(IServiceCollection serviceCollection)
+    public void Install(IServiceCollection services)
     {
-        serviceCollection.AddScoped<IUserRepository, UserRepository>();
-        serviceCollection.AddScoped<IUserService, UserService>();
-        serviceCollection.AddScoped<IUserFacade, UserFacade>();
+        services.AddScoped<IUserRepository, UserRepository>();
+        services.AddScoped<IUserService, UserService>();
+        services.AddScoped<IUserFacade, UserFacade>();
     }
 }
