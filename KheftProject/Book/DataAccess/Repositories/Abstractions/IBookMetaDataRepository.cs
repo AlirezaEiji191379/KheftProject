@@ -7,6 +7,5 @@ namespace KheftProject.Book.DataAccess.Repositories.Abstractions;
 internal interface IBookMetaDataRepository : IBaseRepository<BookMetaDataEntity>
 {
     void ChangeBookStatus(Guid bookId, BookStatus bookStatus);
-    Task<bool> IsBookPaid(Guid bookId);
     Task<List<Guid>> GetExpiredBookIds();
 }

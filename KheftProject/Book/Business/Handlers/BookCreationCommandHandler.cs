@@ -55,8 +55,8 @@ internal class BookCreationCommandHandler : IRequestHandler<BookCreationCommand,
             {
                 BookEntity = bookEntity,
                 BookId = bookEntity.BookId,
-                BookStatus = BookStatus.NotPaid,
-                CreatedAt = DateTime.Now.ToLocalTime(),
+                BookStatus = BookStatus.Pending,
+                CreatedAt = DateTime.Now.ToUniversalTime(),
                 TelegramUserName = request.BookOwner.TelegramUsername
             };
             await _bookRepository.Create(bookEntity);

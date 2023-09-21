@@ -8,7 +8,17 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddKheftServices(builder.Configuration);
-
+builder.Services.AddScoped<SecurityMiddleware>();
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowTelegramBot",
+        corsPolicyBuilder =>
+        {
+            corsPolicyBuilder.WithOrigins(builder.Configuration["TelegramBot"])
+                .AllowAnyHeader()
+                .AllowAnyMethod();
+        });
+});
 
 
 var app = builder.Build();
@@ -16,6 +26,7 @@ var app = builder.Build();
 await Migrator.Migrate(app);
 
 // Middlewares
+app.UseCors("AllowTelegramBot");
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
@@ -28,4 +39,4 @@ app.UseMiddleware<SecurityMiddleware>();
 
 app.MapControllers();
 
-app.Run("http://*:5000");
+app.Run($"http://localhost:{app.Configuration["PortNumber"]}");
