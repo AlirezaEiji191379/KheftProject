@@ -2,6 +2,7 @@
 using KheftProject.Core.DataAccess;
 using KheftProject.Core.DependencyInjection.Abstraction;
 using KheftProject.Core.Job;
+using KheftProject.Core.Middlewares.Security;
 using Microsoft.EntityFrameworkCore;
 
 namespace KheftProject.Core.DependencyInjection;
@@ -19,7 +20,7 @@ public static class KheftDependencyInjector
         (options =>
             options.UseNpgsql(configuration.GetConnectionString("KheftDB")));
         serviceCollection.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly()));
-        serviceCollection.AddHostedService<BookJobRunner>();
+        //serviceCollection.AddHostedService<BookJobRunner>();
     }
 
 

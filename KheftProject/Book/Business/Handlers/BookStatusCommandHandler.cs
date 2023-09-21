@@ -22,16 +22,6 @@ internal class BookStatusCommandHandler : IRequestHandler<BookStatusCommand, Res
     {
         try
         {
-            var isPaid = await _bookMetaDataRepository.IsBookPaid(request.BookId);
-            if (!isPaid)
-            {
-                return new ResponseDto()
-                {
-                    Message = "the book is not exist or the price was not paid",
-                    StatusCode = 404
-                };
-            }
-
             var bookStatus = request.IsAccepted ? BookStatus.Accepted : BookStatus.Rejected;
             _bookMetaDataRepository.ChangeBookStatus(request.BookId, bookStatus);
             await _unitOfWork.SaveChangesAsync(cancellationToken);
