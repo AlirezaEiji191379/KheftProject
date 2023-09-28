@@ -8,4 +8,5 @@ internal interface IBookMetaDataRepository : IBaseRepository<BookMetaDataEntity>
 {
     void ChangeBookStatus(Guid bookId, BookStatus bookStatus);
     Task<List<Guid>> GetExpiredBookIds();
+    Task<BookMetaDataEntity?> GetBookMetaDataEntityIncludeBookAndOwner(Guid bookId);
 }
